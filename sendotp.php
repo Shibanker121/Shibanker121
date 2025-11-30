@@ -16,8 +16,8 @@ $payload = [
     "template_id" => $TEMPLATE_ID,
     "user_id" => $PUBLIC_KEY,
     "template_params" => [
-        "to_email" => $email,
-        "otp" => $otp
+        "email" => $email,   // ← FIXED
+        "otp" => $otp        // ← FIXED
     ]
 ];
 
@@ -34,6 +34,6 @@ curl_close($ch);
 if ($error) {
     echo json_encode(["status" => "error", "msg" => $error]);
 } else {
-    echo json_encode(["status" => "success"]);
+    echo json_encode(["status" => "success", "emailjs" => $response]);
 }
 ?>
