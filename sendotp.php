@@ -23,7 +23,7 @@ $payload = [
     "template_id" => $TEMPLATE_ID,
     "user_id" => $PUBLIC_KEY,
     "template_params" => [
-        "to_email" => $email,
+        "email" => $email,
         "otp" => $otp
     ]
 ];
