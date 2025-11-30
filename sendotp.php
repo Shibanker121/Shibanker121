@@ -6,7 +6,14 @@ $SERVICE_ID  = "service_wdvsyrl";
 $TEMPLATE_ID = "template_kjvl0fz";
 $PUBLIC_KEY  = "0psZdLhjDM-06doVy";
 
-$data = json_decode(file_get_contents("php://input"), true);
+// get JSON body
+$raw = file_get_contents("php://input");
+$data = json_decode($raw, true);
+
+if (!$data) {
+    echo json_encode(["status" => "error", "msg" => "Invalid JSON"]);
+    exit;
+}
 
 $email = $data["email"];
 $otp   = $data["otp"];
@@ -16,8 +23,8 @@ $payload = [
     "template_id" => $TEMPLATE_ID,
     "user_id" => $PUBLIC_KEY,
     "template_params" => [
-        "email" => $email,   // ← FIXED
-        "otp" => $otp        // ← FIXED
+        "to_email" => $email,
+        "otp" => $otp
     ]
 ];
 
@@ -34,6 +41,6 @@ curl_close($ch);
 if ($error) {
     echo json_encode(["status" => "error", "msg" => $error]);
 } else {
-    echo json_encode(["status" => "success", "emailjs" => $response]);
+    echo json_encode(["status" => "success"]);
 }
 ?>
